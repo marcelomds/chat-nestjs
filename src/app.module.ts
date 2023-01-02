@@ -3,12 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AppGateway } from './app/app.gateway';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
     CacheModule.register({
-      ttl: 5, // seconds
-      max: 10, // maximum number of items in cache
+      ttl: 10, // seconds
+      store: redisStore,
+      socket: {
+        host: 'localhost',
+        port: 6379,
+      },
       isGlobal: true,
     }),
   ],
